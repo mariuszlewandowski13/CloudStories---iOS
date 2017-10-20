@@ -28,7 +28,7 @@ public class UpdateEnviroment : MonoBehaviour {
         {
             updating = true;
             WWWForm form = new WWWForm();
-            WWW w = new WWW("http://vrowser.e-kei.pl/CloudStories/" + "GetProjectData.php", form);
+            WWW w = new WWW("https://vrowser.e-kei.pl/CloudStories/" + "GetProjectData.php", form);
             StartCoroutine(request(w));
 
         }

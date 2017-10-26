@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using System.Net;
+using System.IO;
 public class UpdateEnviroment : MonoBehaviour {
 
     private bool updating;
@@ -27,10 +28,17 @@ public class UpdateEnviroment : MonoBehaviour {
         if (!updating)
         {
             updating = true;
+<<<<<<< HEAD
             WWWForm form = new WWWForm();
             form.AddField("ID", ApplicationStaticData.projectID);
             WWW w = new WWW("https://vrowser.e-kei.pl/CloudStories/" + "GetProjectData.php", form);
             StartCoroutine(request(w));
+=======
+            //WWWForm form = new WWWForm();
+            //WWW w = new WWW("https://vrowser.e-kei.pl/CloudStories/" + "GetProjectData.php", form);
+            //StartCoroutine(request(w));
+            Upload();
+>>>>>>> 772d1e02e27bcb9d8ba94b736bc6b267a667b8ee
 
         }
     }
@@ -58,6 +66,43 @@ public class UpdateEnviroment : MonoBehaviour {
         }
 
         Debug.Log(message);
+        updating = false;
+    }
+
+    void Upload()
+    {
+        // Create a request for the URL.   
+        WebRequest request = WebRequest.Create(
+          "http://vrowser.e-kei.pl/CloudStories/" + "GetProjectData.php");
+        // If required by the server, set the credentials.  
+        request.Credentials = CredentialCache.DefaultCredentials;
+        // Get the response.  
+        WebResponse response = request.GetResponse();
+        // Display the status.  
+        Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+        // Get the stream containing content returned by the server.  
+        Stream dataStream = response.GetResponseStream();
+        // Open the stream using a StreamReader for easy access.  
+        StreamReader reader = new StreamReader(dataStream);
+        // Read the content.  
+        string responseFromServer = reader.ReadToEnd();
+        string[] res;
+        string[] msg = responseFromServer.Split(new string[] { "@@@@@" }, StringSplitOptions.None);
+        foreach (string row in msg)
+        {
+            res = row.Split(new string[] { "#####" }, StringSplitOptions.None);
+            if (res.Length > 1)
+            {
+                ProcessLine(res);
+            }
+        }
+
+        // Display the content.  
+        Debug.Log(responseFromServer);
+        // Clean up the streams and the response.  
+        reader.Close();
+        response.Close();
+
         updating = false;
     }
 

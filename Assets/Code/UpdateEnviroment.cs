@@ -28,17 +28,14 @@ public class UpdateEnviroment : MonoBehaviour {
         if (!updating)
         {
             updating = true;
-<<<<<<< HEAD
-            WWWForm form = new WWWForm();
-            form.AddField("ID", ApplicationStaticData.projectID);
-            WWW w = new WWW("https://vrowser.e-kei.pl/CloudStories/" + "GetProjectData.php", form);
-            StartCoroutine(request(w));
-=======
+            //WWWForm form = new WWWForm();
+            //form.AddField("ID", ApplicationStaticData.projectID);
+            //WWW w = new WWW("https://vrowser.e-kei.pl/CloudStories/" + "GetProjectData.php", form);
+            //StartCoroutine(request(w));
             //WWWForm form = new WWWForm();
             //WWW w = new WWW("https://vrowser.e-kei.pl/CloudStories/" + "GetProjectData.php", form);
             //StartCoroutine(request(w));
             Upload();
->>>>>>> 772d1e02e27bcb9d8ba94b736bc6b267a667b8ee
 
         }
     }
@@ -73,7 +70,7 @@ public class UpdateEnviroment : MonoBehaviour {
     {
         // Create a request for the URL.   
         WebRequest request = WebRequest.Create(
-          "http://vrowser.e-kei.pl/CloudStories/" + "GetProjectData.php");
+          "http://vrowser.e-kei.pl/CloudStories/" + "GetProjectData.php?ID=" + ApplicationStaticData.projectID.ToString());
         // If required by the server, set the credentials.  
         request.Credentials = CredentialCache.DefaultCredentials;
         // Get the response.  

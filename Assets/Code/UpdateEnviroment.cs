@@ -28,6 +28,7 @@ public class UpdateEnviroment : MonoBehaviour {
         {
             updating = true;
             WWWForm form = new WWWForm();
+            form.AddField("ID", ApplicationStaticData.projectID);
             WWW w = new WWW("https://vrowser.e-kei.pl/CloudStories/" + "GetProjectData.php", form);
             StartCoroutine(request(w));
 
@@ -62,7 +63,7 @@ public class UpdateEnviroment : MonoBehaviour {
 
     private void ProcessLine(string[] line)
     {
-        if (line[1] == "3DObj")
+        if (line[1] == "3DObject")
         {
             int objectNumber = Int32.Parse(line[0]);
             if (!objectsNumbers.Contains(objectNumber))

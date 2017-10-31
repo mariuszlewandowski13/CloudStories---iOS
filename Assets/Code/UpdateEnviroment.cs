@@ -11,15 +11,17 @@ public class UpdateEnviroment : MonoBehaviour {
 
     private int layout = 0;
 
-    private List<int> objectsNumbers;
+    private Dictionary<int, GameObject> objectsNumbers;
 
     public GameObject[] layouts;
     public GameObject[] objectsPrefabs;
 
+    public GameObject shapeObjectPrefab;
+
     public GameObject layoutObject;
 
 	void Start () {
-        objectsNumbers = new List<int>();
+        objectsNumbers = new Dictionary<int, GameObject>();
         InvokeRepeating("UpdateEnvir", 5.0f, 5.0f);
 	}
 
@@ -108,12 +110,25 @@ public class UpdateEnviroment : MonoBehaviour {
         if (line[1] == "3DObject")
         {
             int objectNumber = Int32.Parse(line[0]);
-            if (!objectsNumbers.Contains(objectNumber))
+            if (!objectsNumbers.ContainsKey(objectNumber))
             {
-                objectsNumbers.Add(objectNumber);
+                
                 GameObject prefab = objectsPrefabs[Int32.Parse(line[2])];
                 Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
-                Instantiate(prefab, pos, new Quaternion());
+                Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
+
+                GameObject newObject = Instantiate(prefab, pos, Quaternion.Euler(rot));
+                objectsNumbers.Add(objectNumber, newObject);
+
+            }
+            else {
+                GameObject objectToChange = objectsNumbers[objectNumber];
+
+                Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
+                Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
+
+                objectToChange.transform.position = pos;
+                objectToChange.transform.rotation = Quaternion.Euler(rot);
 
             }
         }
@@ -126,10 +141,34 @@ public class UpdateEnviroment : MonoBehaviour {
                 ClearLayout();
                 if (layoutNumber != 0)
                 {
-                   GameObject newLayout = Instantiate(layouts[layoutNumber - 1]);
+                    GameObject newLayout = Instantiate(layouts[layoutNumber - 1]);
                     newLayout.transform.parent = layoutObject.transform;
                 }
-                
+
+            }
+        }
+        else if (line[1] == "2DShape")
+        {
+            int objectNumber = Int32.Parse(line[0]);
+            if (!objectsNumbers.ContainsKey(objectNumber))
+            {
+
+                GameObject prefab = shapeObjectPrefab;
+                Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
+                Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
+                GameObject newShape = Instantiate(prefab, pos, Quaternion.Euler(rot));
+                newShape.GetComponent<ImageScript>().SetImagePath(line[2]);
+
+                objectsNumbers.Add(objectNumber, newShape);
+            }
+            else {
+                GameObject objectToChange = objectsNumbers[objectNumber];
+
+                Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
+                Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
+
+                objectToChange.transform.position = pos;
+                objectToChange.transform.rotation = Quaternion.Euler(rot);
             }
         }
 

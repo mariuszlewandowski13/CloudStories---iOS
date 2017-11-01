@@ -28,14 +28,14 @@ public class ImageScript : MonoBehaviour {
 
     private void LoadImgAsMaterial()
     {
-        StartCoroutine(LoadTexture(imagePath));
+        StartCoroutine(LoadTexture());
     }
 
     void Update()
     {
         if (textureReady)
         {
-           // Debug.Log("asdasd");
+            Debug.Log("asdasd");
             GetComponent<Renderer>().material.mainTexture = tex;
             textureReady = false;
         }
@@ -50,18 +50,19 @@ public class ImageScript : MonoBehaviour {
         LoadImgAsMaterial();
     }
 
-    IEnumerator LoadTexture(string name)
+    IEnumerator LoadTexture()
     {
         if (tex == null)
         {
            tex = new Texture2D(2, 2);
-                WWW www = new WWW(name);
+                WWW www = new WWW(imagePath);
                 yield return www;
 
-               // Debug.Log(name);
+                Debug.Log(imagePath);
 
                 if (www.error != null)
                 {
+                Debug.Log(www.error);
                    // ObjectSpawnerScript.DestroyGameObject(gameObject, true);
                 }
                 else {

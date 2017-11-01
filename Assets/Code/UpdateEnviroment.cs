@@ -147,7 +147,7 @@ public class UpdateEnviroment : MonoBehaviour {
 
             }
         }
-        else if (line[1] == "2DShape")
+        else if (line[1] == "2DObject")
         {
             int objectNumber = Int32.Parse(line[0]);
             if (!objectsNumbers.ContainsKey(objectNumber))

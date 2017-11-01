@@ -116,8 +116,10 @@ public class UpdateEnviroment : MonoBehaviour {
                 GameObject prefab = objectsPrefabs[Int32.Parse(line[2])];
                 Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
                 Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
+                Vector3 size = new Vector3(float.Parse(line[9]), float.Parse(line[10]), float.Parse(line[11]));
 
                 GameObject newObject = Instantiate(prefab, pos, Quaternion.Euler(rot));
+                newObject.transform.localScale = size;
                 objectsNumbers.Add(objectNumber, newObject);
 
             }

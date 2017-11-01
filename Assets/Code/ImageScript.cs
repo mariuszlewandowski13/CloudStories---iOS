@@ -6,7 +6,7 @@ using System.Collections;
 using System.Threading;
 using System.Net;
 using System.Runtime.InteropServices;
-
+using System.IO;
 #endregion
 
 
@@ -28,7 +28,7 @@ public class ImageScript : MonoBehaviour {
 
     private void LoadImgAsMaterial()
     {
-        StartCoroutine(LoadTexture());
+        LoadTexture();
     }
 
     void Update()
@@ -50,43 +50,86 @@ public class ImageScript : MonoBehaviour {
         LoadImgAsMaterial();
     }
 
-    IEnumerator LoadTexture()
+    void LoadTexture()
     {
         if (tex == null)
         {
            tex = new Texture2D(2, 2);
-                WWW www = new WWW(imagePath);
-                yield return www;
+            // Create a request for the URL.   
+            WebRequest request = WebRequest.Create(imagePath);
+            // If required by the server, set the credentials.  
+            request.Credentials = CredentialCache.DefaultCredentials;
+            // Get the response.  
+            WebResponse response = request.GetResponse();
+            // Display the status.  
+            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+            // Get the stream containing content returned by the server.  
+            Stream dataStream = response.GetResponseStream();
 
-                Debug.Log(imagePath);
+            tex.LoadImage(StreamToByteArray(dataStream));
+            // Read the content.  
 
-                if (www.error != null)
-                {
-                Debug.Log(www.error);
-                   // ObjectSpawnerScript.DestroyGameObject(gameObject, true);
-                }
-                else {
-                      try
-                      {
-                        www.LoadImageIntoTexture(tex);
-                        textureReady = true;
-                        //Thread th = new Thread(LoadTextureFromUrl);
-                        //th.Start();
-                    }
-                      catch (Exception e)
-                      {
-                           // ObjectSpawnerScript.DestroyGameObject(gameObject);
-                            Debug.Log(e);
-                      }
-                }
-                www.Dispose();         
-            
+            textureReady = true;
+
+            Debug.Log(imagePath);
 
         }
         else {
             textureReady = true;
         }
        
+    }
+
+    public static byte[] StreamToByteArray(Stream stream)
+    {
+        long originalPosition = 0;
+
+        if (stream.CanSeek)
+        {
+            originalPosition = stream.Position;
+            stream.Position = 0;
+        }
+
+        try
+        {
+            byte[] readBuffer = new byte[4096];
+
+            int totalBytesRead = 0;
+            int bytesRead;
+
+            while ((bytesRead = stream.Read(readBuffer, totalBytesRead, readBuffer.Length - totalBytesRead)) > 0)
+            {
+                totalBytesRead += bytesRead;
+
+                if (totalBytesRead == readBuffer.Length)
+                {
+                    int nextByte = stream.ReadByte();
+                    if (nextByte != -1)
+                    {
+                        byte[] temp = new byte[readBuffer.Length * 2];
+                        Buffer.BlockCopy(readBuffer, 0, temp, 0, readBuffer.Length);
+                        Buffer.SetByte(temp, totalBytesRead, (byte)nextByte);
+                        readBuffer = temp;
+                        totalBytesRead++;
+                    }
+                }
+            }
+
+            byte[] buffer = readBuffer;
+            if (readBuffer.Length != totalBytesRead)
+            {
+                buffer = new byte[totalBytesRead];
+                Buffer.BlockCopy(readBuffer, 0, buffer, 0, totalBytesRead);
+            }
+            return buffer;
+        }
+        finally
+        {
+            if (stream.CanSeek)
+            {
+                stream.Position = originalPosition;
+            }
+        }
     }
 
 

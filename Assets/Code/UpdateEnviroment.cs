@@ -128,9 +128,12 @@ public class UpdateEnviroment : MonoBehaviour {
 
                 Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
                 Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
+                Vector3 size = new Vector3(float.Parse(line[9]), float.Parse(line[10]), float.Parse(line[11]));
+
 
                 objectToChange.transform.position = pos;
                 objectToChange.transform.rotation = Quaternion.Euler(rot);
+                objectToChange.transform.localScale = size;
 
             }
         }
@@ -158,9 +161,11 @@ public class UpdateEnviroment : MonoBehaviour {
                 GameObject prefab = shapeObjectPrefab;
                 Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
                 Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
+                Vector3 size = new Vector3(float.Parse(line[9]), float.Parse(line[10]), float.Parse(line[11]));
+
                 GameObject newShape = Instantiate(prefab, pos, Quaternion.Euler(rot));
                 newShape.GetComponent<ImageScript>().SetImagePath(line[2]);
-
+                newShape.transform.localScale = size;
                 objectsNumbers.Add(objectNumber, newShape);
             }
             else {
@@ -168,9 +173,11 @@ public class UpdateEnviroment : MonoBehaviour {
 
                 Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
                 Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
+                Vector3 size = new Vector3(float.Parse(line[9]), float.Parse(line[10]), float.Parse(line[11]));
 
                 objectToChange.transform.position = pos;
                 objectToChange.transform.rotation = Quaternion.Euler(rot);
+                objectToChange.transform.localScale = size;
             }
         }
 

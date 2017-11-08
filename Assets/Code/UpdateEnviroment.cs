@@ -236,17 +236,26 @@ public class UpdateEnviroment : MonoBehaviour {
     private Texture2D Loadtexture(string path, string name)
     {
         Texture2D tex = new Texture2D(2, 2);
-        WebRequest request = WebRequest.Create(path + name);
-        // If required by the server, set the credentials.  
-        request.Credentials = CredentialCache.DefaultCredentials;
-        // Get the response.  
-        WebResponse response = request.GetResponse();
-        // Display the status.  
-        Console.WriteLine(((HttpWebResponse)response).StatusDescription);
-        // Get the stream containing content returned by the server.  
-        Stream dataStream = response.GetResponseStream();
+        try
+        {
+            WebRequest request = WebRequest.Create(path + name);
+            // If required by the server, set the credentials.  
+            request.Credentials = CredentialCache.DefaultCredentials;
+            // Get the response.  
+            WebResponse response = request.GetResponse();
+            // Display the status.  
+            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+            // Get the stream containing content returned by the server.  
+            Stream dataStream = response.GetResponseStream();
 
-        tex.LoadImage(ImageScript.StreamToByteArray(dataStream));
+            tex.LoadImage(ImageScript.StreamToByteArray(dataStream));
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Cannot load texture");
+        }
+       
+        
 
         return tex;
     }

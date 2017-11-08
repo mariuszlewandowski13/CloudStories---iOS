@@ -24,7 +24,7 @@ public class SaveAndLoadProject : MonoBehaviour {
         if (tex != "" && Int32.TryParse(tex, out ID))
         {
             ApplicationStaticData.projectID = ID;
-            SceneManager.LoadScene("mainScene");
+            SceneManager.LoadScene("ArScene");
         }
         else
         {

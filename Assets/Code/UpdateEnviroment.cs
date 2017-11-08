@@ -17,6 +17,8 @@ public enum ObjectsTypes
 
 public class UpdateEnviroment : MonoBehaviour {
 
+    public GameObject spawnedObjectsParent;
+
     private string objectsPath = "obj3D";
 
     private bool updating;
@@ -45,13 +47,7 @@ public class UpdateEnviroment : MonoBehaviour {
         if (!updating)
         {
             updating = true;
-            //WWWForm form = new WWWForm();
-            //form.AddField("ID", ApplicationStaticData.projectID);
-            //WWW w = new WWW("https://vrowser.e-kei.pl/CloudStories/" + "GetProjectData.php", form);
-            //StartCoroutine(request(w));
-            //WWWForm form = new WWWForm();
-            //WWW w = new WWW("https://vrowser.e-kei.pl/CloudStories/" + "GetProjectData.php", form);
-            //StartCoroutine(request(w));
+            
             Upload();
 
         }
@@ -145,11 +141,14 @@ public class UpdateEnviroment : MonoBehaviour {
                     newObject = Load3DObject(line[2], pos, rot);
                 }
 
-               
+                newObject.transform.parent = spawnedObjectsParent.transform;
 
-                
+
+
                 newObject.transform.localScale = size;
                 objectsNumbers.Add(objectNumber, newObject);
+
+
 
             }
             else {
@@ -194,6 +193,9 @@ public class UpdateEnviroment : MonoBehaviour {
 
                 GameObject newShape = Instantiate(prefab, pos, Quaternion.Euler(rot));
                 newShape.GetComponent<ImageScript>().SetImagePath(line[2]);
+
+                newShape.transform.parent = spawnedObjectsParent.transform;
+
                 newShape.transform.localScale = size;
                 objectsNumbers.Add(objectNumber, newShape);
             }

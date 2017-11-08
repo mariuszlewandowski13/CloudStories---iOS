@@ -17,6 +17,8 @@ public enum ObjectsTypes
 
 public class UpdateEnviroment : MonoBehaviour {
 
+    private string objectsPath = "obj3D";
+
     private bool updating;
     private string message;
 
@@ -263,10 +265,12 @@ public class UpdateEnviroment : MonoBehaviour {
         Stream dataStream = response.GetResponseStream();
 
         byte[] bytes = ImageScript.StreamToByteArray(dataStream);
-        File.WriteAllBytes("temp.obj", bytes);
 
-        mesh = FastObjImporter.Instance.ImportFile("temp.obj");
 
+        Directory.CreateDirectory(objectsPath);
+
+        File.WriteAllBytes(objectsPath + "/temp.obj", bytes);
+        mesh = FastObjImporter.Instance.ImportFile(objectsPath + "/temp.obj");
 
         return mesh;
     }

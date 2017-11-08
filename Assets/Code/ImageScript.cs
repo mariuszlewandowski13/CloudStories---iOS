@@ -35,7 +35,6 @@ public class ImageScript : MonoBehaviour {
     {
         if (textureReady)
         {
-            Debug.Log("asdasd");
             GetComponent<Renderer>().material.mainTexture = tex;
             textureReady = false;
         }

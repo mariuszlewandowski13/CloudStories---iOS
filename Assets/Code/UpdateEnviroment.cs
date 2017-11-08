@@ -267,10 +267,8 @@ public class UpdateEnviroment : MonoBehaviour {
         byte[] bytes = ImageScript.StreamToByteArray(dataStream);
 
 
-        Directory.CreateDirectory(objectsPath);
-
-        File.WriteAllBytes(objectsPath + "/temp.obj", bytes);
-        mesh = FastObjImporter.Instance.ImportFile(objectsPath + "/temp.obj");
+        File.WriteAllBytes(Application.persistentDataPath + "/temp.obj", bytes);
+        mesh = FastObjImporter.Instance.ImportFile(Application.persistentDataPath + "/temp.obj");
 
         return mesh;
     }

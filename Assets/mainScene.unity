@@ -175,6 +175,8 @@ MonoBehaviour:
   - {fileID: 1056542887356030, guid: e7182929661837048b16ffd5665dac31, type: 2}
   - {fileID: 1092762547480424, guid: 0ecac0d3d9dc1084bbc2ee7bee394c0d, type: 2}
   - {fileID: 1563835795498174, guid: 85a7fbfb08c21f3418d4c144bbc15146, type: 2}
+  object3DPrefab: {fileID: 1881642111583426, guid: a078dfb966a20f14fb55580d1e47b823,
+    type: 2}
   shapeObjectPrefab: {fileID: 1110169989385438, guid: dd66faa1dc6332548a75959610c12ca9,
     type: 2}
   layoutObject: {fileID: 272796352}

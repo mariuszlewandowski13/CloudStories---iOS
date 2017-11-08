@@ -4,6 +4,17 @@ using UnityEngine;
 using System;
 using System.Net;
 using System.IO;
+
+public enum ObjectsTypes
+{
+    shapeObject,
+    object3D,
+    movie,
+    gif,
+    audio,
+    layout
+}
+
 public class UpdateEnviroment : MonoBehaviour {
 
     private bool updating;
@@ -15,6 +26,8 @@ public class UpdateEnviroment : MonoBehaviour {
 
     public GameObject[] layouts;
     public GameObject[] objectsPrefabs;
+
+    public GameObject object3DPrefab;
 
     public GameObject shapeObjectPrefab;
 
@@ -107,18 +120,32 @@ public class UpdateEnviroment : MonoBehaviour {
 
     private void ProcessLine(string[] line)
     {
-        if (line[1] == "3DObject")
+        ObjectsTypes objType = (ObjectsTypes)Int32.Parse(line[1]);
+
+        if (objType == ObjectsTypes.object3D)
         {
             int objectNumber = Int32.Parse(line[0]);
             if (!objectsNumbers.ContainsKey(objectNumber))
             {
-                
-                GameObject prefab = objectsPrefabs[Int32.Parse(line[2])];
+                int number;
+                GameObject newObject = null;
+
+
                 Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
                 Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
                 Vector3 size = new Vector3(float.Parse(line[9]), float.Parse(line[10]), float.Parse(line[11]));
 
-                GameObject newObject = Instantiate(prefab, pos, Quaternion.Euler(rot));
+                if (Int32.TryParse(line[2], out number))
+                {
+                     newObject = Instantiate(objectsPrefabs[number], pos, Quaternion.Euler(rot));
+                }
+                else {
+                    newObject = Load3DObject(line[2], pos, rot);
+                }
+
+               
+
+                
                 newObject.transform.localScale = size;
                 objectsNumbers.Add(objectNumber, newObject);
 
@@ -137,7 +164,7 @@ public class UpdateEnviroment : MonoBehaviour {
 
             }
         }
-        else if (line[1] == "LAYOUT")
+        else if (objType == ObjectsTypes.layout)
         {
             int layoutNumber = Int32.Parse(line[2]);
             if (layout != layoutNumber)
@@ -152,7 +179,7 @@ public class UpdateEnviroment : MonoBehaviour {
 
             }
         }
-        else if (line[1] == "2DObject")
+        else if (objType == ObjectsTypes.shapeObject)
         {
             int objectNumber = Int32.Parse(line[0]);
             if (!objectsNumbers.ContainsKey(objectNumber))
@@ -185,6 +212,14 @@ public class UpdateEnviroment : MonoBehaviour {
     }
 
 
+    private GameObject Load3DObject(string path, Vector3 pos, Vector3 rot)
+    {
+        GameObject newObject = Instantiate(object3DPrefab, pos, Quaternion.Euler(rot));
+        newObject.GetComponent<MeshFilter>().mesh = LoadMesh(path, "object3D.obj");
+        newObject.GetComponent<Renderer>().material.mainTexture = Loadtexture(path, "tex.png");
+        return newObject;
+    }
+
     private void ClearLayout()
     {
         if (layoutObject != null)
@@ -196,6 +231,44 @@ public class UpdateEnviroment : MonoBehaviour {
         }
     }
 
+    private Texture2D Loadtexture(string path, string name)
+    {
+        Texture2D tex = new Texture2D(2, 2);
+        WebRequest request = WebRequest.Create(path + name);
+        // If required by the server, set the credentials.  
+        request.Credentials = CredentialCache.DefaultCredentials;
+        // Get the response.  
+        WebResponse response = request.GetResponse();
+        // Display the status.  
+        Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+        // Get the stream containing content returned by the server.  
+        Stream dataStream = response.GetResponseStream();
 
+        tex.LoadImage(ImageScript.StreamToByteArray(dataStream));
+
+        return tex;
+    }
+
+    private Mesh LoadMesh(string path, string name)
+    {
+        Mesh mesh = new Mesh();
+        WebRequest request = WebRequest.Create(path + name);
+        // If required by the server, set the credentials.  
+        request.Credentials = CredentialCache.DefaultCredentials;
+        // Get the response.  
+        WebResponse response = request.GetResponse();
+        // Display the status.  
+        Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+        // Get the stream containing content returned by the server.  
+        Stream dataStream = response.GetResponseStream();
+
+        byte[] bytes = ImageScript.StreamToByteArray(dataStream);
+        File.WriteAllBytes("temp.obj", bytes);
+
+        mesh = FastObjImporter.Instance.ImportFile("temp.obj");
+
+
+        return mesh;
+    }
 
 }

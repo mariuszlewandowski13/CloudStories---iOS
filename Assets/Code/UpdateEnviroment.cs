@@ -141,11 +141,12 @@ public class UpdateEnviroment : MonoBehaviour {
                     newObject = Load3DObject(line[2], pos, rot, objectNumber);
                 }
 
+                newObject.transform.localScale = size;
                 newObject.transform.parent = spawnedObjectsParent.transform;
 
 
 
-                newObject.transform.localScale = size;
+                
                 objectsNumbers.Add(objectNumber, newObject);
 
 
@@ -161,8 +162,10 @@ public class UpdateEnviroment : MonoBehaviour {
 
                 objectToChange.transform.position = pos;
                 objectToChange.transform.rotation = Quaternion.Euler(rot);
-                objectToChange.transform.localScale = size;
 
+                objectToChange.transform.parent = null;
+                objectToChange.transform.localScale = size;
+                objectToChange.transform.parent = spawnedObjectsParent.transform;
             }
         }
         else if (objType == ObjectsTypes.layout)

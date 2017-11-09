@@ -138,7 +138,7 @@ public class UpdateEnviroment : MonoBehaviour {
                      newObject = Instantiate(objectsPrefabs[number], pos, Quaternion.Euler(rot));
                 }
                 else {
-                    newObject = Load3DObject(line[2], pos, rot);
+                    newObject = Load3DObject(line[2], pos, rot, objectNumber);
                 }
 
                 newObject.transform.parent = spawnedObjectsParent.transform;
@@ -216,11 +216,10 @@ public class UpdateEnviroment : MonoBehaviour {
     }
 
 
-    private GameObject Load3DObject(string path, Vector3 pos, Vector3 rot)
+    private GameObject Load3DObject(string path, Vector3 pos, Vector3 rot, int id)
     {
         GameObject newObject = Instantiate(object3DPrefab, pos, Quaternion.Euler(rot));
-        newObject.GetComponent<MeshFilter>().mesh = LoadMesh(path, "object3D.obj");
-        newObject.GetComponent<Renderer>().material.mainTexture = Loadtexture(path, "tex.png");
+        newObject.GetComponent<Object3DScript>().LoadObject(path, "object3D.obj", "tex.png", id); 
         return newObject;
     }
 
@@ -235,53 +234,7 @@ public class UpdateEnviroment : MonoBehaviour {
         }
     }
 
-    private Texture2D Loadtexture(string path, string name)
-    {
-        Texture2D tex = new Texture2D(2, 2);
-        try
-        {
-            WebRequest request = WebRequest.Create(path + name);
-            // If required by the server, set the credentials.  
-            request.Credentials = CredentialCache.DefaultCredentials;
-            // Get the response.  
-            WebResponse response = request.GetResponse();
-            // Display the status.  
-            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
-            // Get the stream containing content returned by the server.  
-            Stream dataStream = response.GetResponseStream();
 
-            tex.LoadImage(ImageScript.StreamToByteArray(dataStream));
-        }
-        catch (Exception e)
-        {
-            Debug.Log("Cannot load texture");
-        }
-       
-        
-
-        return tex;
-    }
-
-    private Mesh LoadMesh(string path, string name)
-    {
-        Mesh mesh = new Mesh();
-        WebRequest request = WebRequest.Create(path + name);
-        // If required by the server, set the credentials.  
-        request.Credentials = CredentialCache.DefaultCredentials;
-        // Get the response.  
-        WebResponse response = request.GetResponse();
-        // Display the status.  
-        Console.WriteLine(((HttpWebResponse)response).StatusDescription);
-        // Get the stream containing content returned by the server.  
-        Stream dataStream = response.GetResponseStream();
-
-        byte[] bytes = ImageScript.StreamToByteArray(dataStream);
-
-
-        File.WriteAllBytes(Application.persistentDataPath + "/temp.obj", bytes);
-        mesh = FastObjImporter.Instance.ImportFile(Application.persistentDataPath + "/temp.obj");
-
-        return mesh;
-    }
+   
 
 }

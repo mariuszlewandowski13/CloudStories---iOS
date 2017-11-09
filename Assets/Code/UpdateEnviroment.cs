@@ -196,6 +196,7 @@ public class UpdateEnviroment : MonoBehaviour {
                 newShape.transform.parent = spawnedObjectsParent.transform;
 
                 newShape.transform.localScale = size;
+                newShape.transform.localPosition = pos;
                 objectsNumbers.Add(objectNumber, newShape);
             }
             else {
@@ -205,7 +206,7 @@ public class UpdateEnviroment : MonoBehaviour {
                 Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
                 Vector3 size = new Vector3(float.Parse(line[9]), float.Parse(line[10]), float.Parse(line[11]));
 
-                objectToChange.transform.position = pos;
+                objectToChange.transform.localPosition = pos;
                 objectToChange.transform.rotation = Quaternion.Euler(rot);
                 objectToChange.transform.localScale = size;
             }

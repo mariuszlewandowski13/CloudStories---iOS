@@ -48,7 +48,7 @@ public class UpdateEnviroment : MonoBehaviour {
         {
             updating = true;
             
-            Upload();
+            Download();
 
         }
     }
@@ -79,7 +79,7 @@ public class UpdateEnviroment : MonoBehaviour {
         updating = false;
     }
 
-    void Upload()
+    void Download()
     {
         // Create a request for the URL.   
         WebRequest request = WebRequest.Create(

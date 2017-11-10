@@ -141,8 +141,9 @@ public class UpdateEnviroment : MonoBehaviour {
                     newObject = Load3DObject(line[2], pos, rot, objectNumber);
                 }
                 newObject.transform.parent = spawnedObjectsParent.transform;
-                newObject.transform.localScale = size;
                 newObject.transform.localPosition = pos;
+                newObject.transform.localScale = size;
+                
                 objectsNumbers.Add(objectNumber, newObject);
 
 
@@ -194,9 +195,9 @@ public class UpdateEnviroment : MonoBehaviour {
                 newShape.GetComponent<ImageScript>().SetImagePath(line[2]);
 
                 newShape.transform.parent = spawnedObjectsParent.transform;
-
-                newShape.transform.localScale = size;
                 newShape.transform.localPosition = pos;
+                newShape.transform.localScale = size;
+               
                 objectsNumbers.Add(objectNumber, newShape);
             }
             else {

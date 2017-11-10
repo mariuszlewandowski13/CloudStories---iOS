@@ -31,7 +31,7 @@ public sealed class FastObjImporter
     private static readonly float[] pow10 = GenerateLookupTable();
 
     // Use this for initialization
-    public Mesh ImportFile(string filePath)
+    public Mesh ImportFile(byte [] bytes)
     {
         triangles = new List<int>();
         vertices = new List<Vector3>();
@@ -40,7 +40,7 @@ public sealed class FastObjImporter
         faceData = new List<Vector3Int>();
         intArray = new List<int>();
 
-        LoadMeshData(filePath);
+        LoadMeshData(bytes);
 
         Vector3[] newVerts = new Vector3[faceData.Count];
         Vector2[] newUVs = new Vector2[faceData.Count];
@@ -71,11 +71,11 @@ public sealed class FastObjImporter
         return mesh;
     }
 
-    private void LoadMeshData(string fileName)
+    private void LoadMeshData(byte [] bytes)
     {
 
         StringBuilder sb = new StringBuilder();
-        string text = File.ReadAllText(fileName);
+        string text = System.Text.Encoding.UTF8.GetString(bytes); ;
         int start = 0;
         string objectName = null;
         int faceDataCount = 0;

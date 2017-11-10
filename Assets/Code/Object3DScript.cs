@@ -14,6 +14,7 @@ public class Object3DScript : MonoBehaviour {
     private string texName;
 
     private byte[] texBytes;
+    private byte[] objBytes;
 
     private bool TexBytesLoaded;
     private bool MeshBytesLoaded;
@@ -68,7 +69,7 @@ public class Object3DScript : MonoBehaviour {
     {
         Mesh mesh = new Mesh();
 
-        mesh = FastObjImporter.Instance.ImportFile(dataPath + "/temp" + ID.ToString() + ".obj");
+        mesh = FastObjImporter.Instance.ImportFile(objBytes);
         GetComponent<MeshFilter>().mesh= mesh;
     }
 
@@ -111,9 +112,8 @@ public class Object3DScript : MonoBehaviour {
         // Get the stream containing content returned by the server.  
         Stream dataStream = response.GetResponseStream();
 
-        byte[] bytes = ImageScript.StreamToByteArray(dataStream);
+        objBytes = ImageScript.StreamToByteArray(dataStream);
 
-        File.WriteAllBytes(dataPath + "/temp" + ID.ToString() + ".obj", bytes);
 
         MeshBytesLoaded = true;
     }

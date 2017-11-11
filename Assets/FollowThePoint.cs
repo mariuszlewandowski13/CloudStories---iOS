@@ -16,7 +16,7 @@ public class FollowThePoint : MonoBehaviour {
     {
         if (other.gameObject.GetComponent<Selector>().Hoover <= 1.5f)
         {
-            other.gameObject.GetComponent<Selector>().Hoover += .004f * Time.time;
+            other.gameObject.GetComponent<Selector>().Hoover += .003f * Time.time;
             Handheld.Vibrate();
         }
     }

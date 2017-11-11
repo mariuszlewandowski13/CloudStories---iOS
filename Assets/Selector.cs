@@ -35,9 +35,20 @@ public class Selector:MonoBehaviour
         GetComponent<Renderer>().material.color = color;
     }
 
+    IEnumerator fadeIn()
+    {
+        while (Hoover <= 1.5f)
+        {
+            Hoover += 0.008f * Time.time;
+            yield return null;
+            if (Hoover == 1.5f) StopCoroutine("fadeOut");
+        }
+    }
+
+
     IEnumerator fadeOut()
     {
-        while (Hoover>0.01f)
+        while (Hoover>=0.01f)
         {
             Hoover -= 0.008f*Time.time;
             yield return null;

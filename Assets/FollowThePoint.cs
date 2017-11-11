@@ -12,9 +12,16 @@ public class FollowThePoint : MonoBehaviour {
         GetComponent<Rigidbody>().AddForce(destintaion.position - transform.position * sens);// = (destintaion.position - transform.position) * sens;
     }
 
-    public void OnCollisionStay(Collision collision)
+    public void OnTriggerStay(Collider other)
     {
-        Handheld.Vibrate();
-        Debug.Log(Time.time);
+        if (other.gameObject.GetComponent<Selector>().Hoover <= 1.5f)
+        {
+            other.gameObject.GetComponent<Selector>().Hoover += .004f * Time.time;
+            Handheld.Vibrate();
+        }
+    }
+    public void OnTriggerExit(Collider other)
+    {
+        other.gameObject.GetComponent<Selector>().StartCoroutine("fadeOut");
     }
 }

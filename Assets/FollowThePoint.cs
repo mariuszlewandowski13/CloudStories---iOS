@@ -9,7 +9,12 @@ public class FollowThePoint : MonoBehaviour {
     
     // Update is called once per frame
     public void Update () {
-
         GetComponent<Rigidbody>().AddForce(destintaion.position - transform.position * sens);// = (destintaion.position - transform.position) * sens;
+    }
+
+    public void OnCollisionStay(Collision collision)
+    {
+        Handheld.Vibrate();
+        Debug.Log(Time.time);
     }
 }

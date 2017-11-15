@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/ArScenesBrowser.unity
+    guid: 93bb1fb9e44ee493e89ba18e090b0ebe
+  - enabled: 0
     path: Assets/LoadScene.unity
     guid: 0e04c3baf3706a648a05d6aac16332f0
   - enabled: 1

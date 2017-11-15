@@ -77,15 +77,17 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
-    m_PVRFiltering: 0
+    m_PVRFilterTypeDirect: 0
+    m_PVRFilterTypeIndirect: 0
+    m_PVRFilterTypeAO: 0
     m_PVRFilteringMode: 1
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
     m_PVRFilteringGaussRadiusAO: 2
-    m_PVRFilteringAtrousColorSigma: 1
-    m_PVRFilteringAtrousNormalSigma: 1
-    m_PVRFilteringAtrousPositionSigma: 1
+    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
+    m_PVRFilteringAtrousPositionSigmaIndirect: 2
+    m_PVRFilteringAtrousPositionSigmaAO: 1
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &5
@@ -107,6 +109,8 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
+    debug:
+      m_Flags: 0
   m_NavMeshData: {fileID: 0}
 --- !u!1 &7
 GameObject:
@@ -185,11 +189,11 @@ Camera:
   m_TargetEye: 3
   m_HDR: 0
   m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
-  m_StereoMirrorMode: 0
 --- !u!81 &11
 AudioListener:
   m_ObjectHideFlags: 0
@@ -367,6 +371,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -382,6 +387,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -551,6 +557,7 @@ MeshRenderer:
   m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -566,6 +573,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -816,6 +824,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -831,6 +840,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -894,6 +904,8 @@ MonoBehaviour:
   - {fileID: 1947041010375334, guid: 16f782e3579d9094cab921eaaf888d34, type: 2}
   - {fileID: 1173864885753832, guid: 9a921fc53573aa84884af76d2cf805e8, type: 2}
   - {fileID: 1497454248252214, guid: 742369f58da1e1c469783fc46556a8b4, type: 2}
+  - {fileID: 1784400267626516, guid: 27a30115266b827479d2cf135f004f54, type: 2}
+  - {fileID: 1540339134861680, guid: 750be847e5d4fb04aaae4ff0e37dc43f, type: 2}
   shapesPrefabs:
   - {fileID: 1738025860521840, guid: b887e72e6b2a2d44db0ce7c16ff72e51, type: 2}
   - {fileID: 1523914709254776, guid: 4e2974cad378c5347b0637531f78a8fc, type: 2}
@@ -905,6 +917,13 @@ MonoBehaviour:
   - {fileID: 1209559656430656, guid: 09a8c4ab6b645834cadbd8c28d14b68f, type: 2}
   - {fileID: 1145708098483168, guid: 2abcb37f53a73e948973b140d0654096, type: 2}
   - {fileID: 1905815268922448, guid: ce179c9456db12d41b2f3f2c3b764f8a, type: 2}
+  - {fileID: 1053755524020122, guid: d3387c6e592626b4488cc1f64738c449, type: 2}
+  - {fileID: 1041058418651632, guid: a416696eed9e4c042b7176245393526b, type: 2}
+  - {fileID: 1519031877750462, guid: edc25e4462f731445b3435d6c6a5479b, type: 2}
+  - {fileID: 1923325115537208, guid: 559525b4e4b2e0749b5ff0fde1ac8526, type: 2}
+  - {fileID: 1388701758807380, guid: 60b998840c4007b49a8322ed2909b7bc, type: 2}
+  - {fileID: 1519400025768976, guid: cf05bd43c85ca654689054ab420f42fa, type: 2}
+  - {fileID: 1147437003598080, guid: a90886b14212a1143b48179dbc885e7d, type: 2}
   object3DPrefab: {fileID: 1881642111583426, guid: a078dfb966a20f14fb55580d1e47b823,
     type: 2}
   shapeObjectPrefab: {fileID: 1110169989385438, guid: dd66faa1dc6332548a75959610c12ca9,

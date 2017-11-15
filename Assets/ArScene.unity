@@ -295,20 +295,6 @@ Light:
   m_Lightmapping: 1
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_FalloffTable:
-    m_Table[0]: 0
-    m_Table[1]: 0
-    m_Table[2]: 0
-    m_Table[3]: 0
-    m_Table[4]: 0
-    m_Table[5]: 0
-    m_Table[6]: 0
-    m_Table[7]: 0
-    m_Table[8]: 0
-    m_Table[9]: 0
-    m_Table[10]: 0
-    m_Table[11]: 0
-    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -906,6 +892,8 @@ MonoBehaviour:
   - {fileID: 1311005028212108, guid: b0fd99baf86505c4f9a3396a33358f9d, type: 2}
   objectsPrefabs:
   - {fileID: 1947041010375334, guid: 16f782e3579d9094cab921eaaf888d34, type: 2}
+  - {fileID: 1173864885753832, guid: 9a921fc53573aa84884af76d2cf805e8, type: 2}
+  - {fileID: 1497454248252214, guid: 742369f58da1e1c469783fc46556a8b4, type: 2}
   shapesPrefabs:
   - {fileID: 1738025860521840, guid: b887e72e6b2a2d44db0ce7c16ff72e51, type: 2}
   - {fileID: 1523914709254776, guid: 4e2974cad378c5347b0637531f78a8fc, type: 2}
@@ -913,6 +901,10 @@ MonoBehaviour:
   - {fileID: 1800651244908412, guid: b8427f733fce01642864ed0f07a61c6b, type: 2}
   - {fileID: 1564374481474302, guid: ef69b8a5164c2fb4492a144a17428765, type: 2}
   - {fileID: 1907078512724592, guid: feb94efe2e90e934fac85884c90ee04b, type: 2}
+  - {fileID: 1582385366235510, guid: 6eda6f6b74592324f8df8dcea410b3b0, type: 2}
+  - {fileID: 1209559656430656, guid: 09a8c4ab6b645834cadbd8c28d14b68f, type: 2}
+  - {fileID: 1145708098483168, guid: 2abcb37f53a73e948973b140d0654096, type: 2}
+  - {fileID: 1905815268922448, guid: ce179c9456db12d41b2f3f2c3b764f8a, type: 2}
   object3DPrefab: {fileID: 1881642111583426, guid: a078dfb966a20f14fb55580d1e47b823,
     type: 2}
   shapeObjectPrefab: {fileID: 1110169989385438, guid: dd66faa1dc6332548a75959610c12ca9,

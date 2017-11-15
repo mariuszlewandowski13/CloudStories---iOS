@@ -30,6 +30,7 @@ public class UpdateEnviroment : MonoBehaviour {
 
     public GameObject[] layouts;
     public GameObject[] objectsPrefabs;
+    public GameObject[] shapesPrefabs;
 
     public GameObject object3DPrefab;
 
@@ -53,31 +54,7 @@ public class UpdateEnviroment : MonoBehaviour {
         }
     }
 
-    IEnumerator request(WWW w)
-    {
-        yield return w;
-        if (w.error == null)
-        {
-            message = w.text;
-        }
-        else
-        {
-            message = "ERROR: " + w.error + "\n";
-        }
-        string [] res;
-        string [] msg = message.Split(new string[] { "@@@@@" }, StringSplitOptions.None);
-        foreach (string row in msg)
-        {
-            res = row.Split(new string[] { "#####" }, StringSplitOptions.None);
-            if (res.Length > 1)
-            {
-                ProcessLine(res);
-            }
-        }
-
-        Debug.Log(message);
-        updating = false;
-    }
+ 
 
     void Download()
     {
@@ -187,12 +164,30 @@ public class UpdateEnviroment : MonoBehaviour {
             {
 
                 GameObject prefab = shapeObjectPrefab;
+
+
+
+
                 Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
                 Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
                 Vector3 size = new Vector3(float.Parse(line[9]), float.Parse(line[10]), float.Parse(line[11]));
 
-                GameObject newShape = Instantiate(prefab, pos, Quaternion.Euler(rot));
-                newShape.GetComponent<ImageScript>().SetImagePath(line[2]);
+                GameObject newShape = null;
+
+                int number;
+
+                if (Int32.TryParse(line[2], out number))
+                {
+                    newShape = Instantiate(shapesPrefabs[number], pos, Quaternion.Euler(rot));
+                }
+                else
+                {
+                    newShape = Instantiate(prefab, pos, Quaternion.Euler(rot));
+                    newShape.GetComponent<ImageScript>().SetImagePath(line[2]);
+                }
+
+                
+                
 
                 newShape.transform.parent = spawnedObjectsParent.transform;
                 newShape.transform.localPosition = pos;

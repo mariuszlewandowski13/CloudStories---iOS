@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4337066437226122}
   - component: {fileID: 33927584531500660}
   - component: {fileID: 23412878564692976}
-  - component: {fileID: 65972270363165280}
+  - component: {fileID: 65087880279901008}
   m_Layer: 0
   m_Name: Burger
   m_TagString: Untagged
@@ -83,7 +83,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1497454248252214}
   m_Mesh: {fileID: 4300000, guid: 6d9109c748d8d1b4f8bf604eac0d5cdc, type: 3}
---- !u!65 &65972270363165280
+--- !u!65 &65087880279901008
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -93,5 +93,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.07360281, y: 0.067458004, z: 0.04298662}
-  m_Center: {x: -0.0006301557, y: 0.0043860674, z: 0.15695296}
+  m_Size: {x: 0.073602796, y: 0.067458004, z: 0.042986624}
+  m_Center: {x: -0.0006301578, y: 0.004386086, z: 0.15695293}

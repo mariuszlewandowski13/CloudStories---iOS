@@ -18,7 +18,6 @@ public enum ObjectsTypes
 public class UpdateEnviroment : MonoBehaviour {
 
     public GameObject spawnedObjectsParent;
-
     private string objectsPath = "obj3D";
 
     private bool updating;

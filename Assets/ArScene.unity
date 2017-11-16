@@ -908,6 +908,10 @@ MonoBehaviour:
   - {fileID: 1540339134861680, guid: 750be847e5d4fb04aaae4ff0e37dc43f, type: 2}
   - {fileID: 1754025755410858, guid: b5c17e5b777d3fc438d69449ad23b47a, type: 2}
   - {fileID: 1471157707190044, guid: 78664f84093bf684e9edb8c99bba9d52, type: 2}
+  - {fileID: 1493577623898858, guid: c3c0db4b650540040b42849241e6bad2, type: 2}
+  - {fileID: 1916871947213760, guid: 51b64cfc47a32d34fbea6c352da6ef94, type: 2}
+  - {fileID: 1544135602601258, guid: 1ba43c74fb4ca1b4188a9dbf8a65ee8f, type: 2}
+  - {fileID: 1039560463353856, guid: 24087773ecf1ef04190e0825e408cb90, type: 2}
   shapesPrefabs:
   - {fileID: 1738025860521840, guid: b887e72e6b2a2d44db0ce7c16ff72e51, type: 2}
   - {fileID: 1523914709254776, guid: 4e2974cad378c5347b0637531f78a8fc, type: 2}

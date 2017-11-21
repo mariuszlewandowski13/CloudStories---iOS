@@ -59,7 +59,7 @@ public class UpdateEnviroment : MonoBehaviour {
     {
         // Create a request for the URL.   
         WebRequest request = WebRequest.Create(
-          "http://vrowser.e-kei.pl/CloudStories/" + "GetProjectData.php?ID=" + ApplicationStaticData.projectID.ToString());
+          "http://vrowser.e-kei.pl/CloudStories/" + "GetSceneData.php?projectID=" + ApplicationStaticData.projectID.ToString()+ "&sceneID=" + ApplicationStaticData.sceneID.ToString());
         // If required by the server, set the credentials.  
         request.Credentials = CredentialCache.DefaultCredentials;
         // Get the response.  

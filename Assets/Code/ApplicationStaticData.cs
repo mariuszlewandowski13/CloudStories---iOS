@@ -5,4 +5,5 @@ using UnityEngine;
 public class ApplicationStaticData : MonoBehaviour {
 
     public static int projectID;
+    public static int sceneID = 1;
 }

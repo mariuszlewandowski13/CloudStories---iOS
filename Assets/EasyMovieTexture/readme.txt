@@ -21,10 +21,24 @@ http://orange.blender.org/blog/creative-commons-license-2/
 
 
 
-Current version 3.63
+Current version 3.66
 
 
 ------------------------------------------------------------------------------------------
+Update ( Ver. 3.66) 
+
+ 1. Improve streaming service performance on PC 
+ 2. GetCurrentSeekPercent function modified to work on iOS and PC 
+
+ Update ( Ver. 3.65) 
+
+ 1. Fixed sound bug on PC 
+
+ Update ( Ver. 3.64) 
+
+1. Metal graphics support in OSX 
+2. Fixed the problem that video play speeds up in certain formats. 
+3. Fixed an issue where sound does not play properly in certain formats. 
 
 Update ( Ver. 3.63)
 

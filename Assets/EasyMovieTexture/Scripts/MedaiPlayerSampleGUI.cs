@@ -89,7 +89,13 @@ public class MedaiPlayerSampleGUI : MonoBehaviour {
 		{
 			
 		}
-	
+
+        if (GUI.Button(new Rect(300, 650, 100, 100), scrMedia.GetCurrentState().ToString()))
+        {
+
+        }
+
+
 
 	}
 	#endif

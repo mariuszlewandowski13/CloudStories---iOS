@@ -34,6 +34,7 @@ public class UpdateEnviroment : MonoBehaviour {
     public GameObject object3DPrefab;
 
     public GameObject shapeObjectPrefab;
+    public GameObject videoObjectPrefab;
 
     public GameObject layoutObject;
 
@@ -195,6 +196,51 @@ public class UpdateEnviroment : MonoBehaviour {
                 objectsNumbers.Add(objectNumber, newShape);
             }
             else {
+                GameObject objectToChange = objectsNumbers[objectNumber];
+
+                Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
+                Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
+                Vector3 size = new Vector3(float.Parse(line[9]), float.Parse(line[10]), float.Parse(line[11]));
+
+                objectToChange.transform.localPosition = pos;
+                objectToChange.transform.rotation = Quaternion.Euler(rot);
+                objectToChange.transform.localScale = size;
+            }
+        }
+        else if (objType == ObjectsTypes.movie)
+        {
+            int objectNumber = Int32.Parse(line[0]);
+            if (!objectsNumbers.ContainsKey(objectNumber))
+            {
+
+                GameObject prefab = videoObjectPrefab;
+
+
+
+
+                Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
+                Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
+                Vector3 size = new Vector3(float.Parse(line[9]), float.Parse(line[10]), float.Parse(line[11]));
+
+                GameObject newVideo = null;
+
+                
+
+                    newVideo = Instantiate(prefab, pos, Quaternion.Euler(rot));
+                
+
+
+
+
+                newVideo.transform.parent = spawnedObjectsParent.transform;
+                newVideo.transform.localPosition = pos;
+                newVideo.transform.localScale = size;
+                newVideo.GetComponent<MediaPlayerCtrl>().m_strFileName = "file://" + line[2];
+
+                objectsNumbers.Add(objectNumber, newVideo);
+            }
+            else
+            {
                 GameObject objectToChange = objectsNumbers[objectNumber];
 
                 Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));

@@ -9,7 +9,9 @@ public class SaveAndLoadProject : MonoBehaviour {
 
     public Text text;
     public Text errorText;
-    public 
+    public Dropdown dropdown;
+    
+     
     void Start()
     {
         Button btn = GetComponent<Button>();
@@ -24,6 +26,7 @@ public class SaveAndLoadProject : MonoBehaviour {
         if (tex != "" && Int32.TryParse(tex, out ID))
         {
             ApplicationStaticData.projectID = ID;
+            ApplicationStaticData.sceneID = int.Parse(dropdown.options[dropdown.value].text);
             SceneManager.LoadScene("ArScene");
         }
         else

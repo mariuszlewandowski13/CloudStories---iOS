@@ -28,6 +28,7 @@ public class ImageScript : MonoBehaviour {
 
     private void LoadImgAsMaterial()
     {
+
         LoadTexture();
     }
 
@@ -53,22 +54,30 @@ public class ImageScript : MonoBehaviour {
     {
         if (tex == null)
         {
-           tex = new Texture2D(2, 2);
-            // Create a request for the URL.   
-            WebRequest request = WebRequest.Create(imagePath);
-            // If required by the server, set the credentials.  
-            request.Credentials = CredentialCache.DefaultCredentials;
-            // Get the response.  
-            WebResponse response = request.GetResponse();
-            // Display the status.  
-            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
-            // Get the stream containing content returned by the server.  
-            Stream dataStream = response.GetResponseStream();
+            try
+            {
+                tex = new Texture2D(2, 2);
+                // Create a request for the URL.   
+                WebRequest request = WebRequest.Create(imagePath);
+                // If required by the server, set the credentials.  
+                request.Credentials = CredentialCache.DefaultCredentials;
+                // Get the response.  
+                WebResponse response = request.GetResponse();
+                // Display the status.  
+                Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+                // Get the stream containing content returned by the server.  
+                Stream dataStream = response.GetResponseStream();
 
-            tex.LoadImage(StreamToByteArray(dataStream));
-            // Read the content.  
+                tex.LoadImage(StreamToByteArray(dataStream));
+                // Read the content.  
 
-            textureReady = true;
+                textureReady = true;
+            }
+            catch (Exception e)
+            {
+                Destroy(gameObject, 0.5f);
+            }
+           
 
             Debug.Log(imagePath);
 

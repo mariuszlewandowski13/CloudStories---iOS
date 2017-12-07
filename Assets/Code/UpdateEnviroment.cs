@@ -235,7 +235,7 @@ public class UpdateEnviroment : MonoBehaviour {
                 newVideo.transform.parent = spawnedObjectsParent.transform;
                 newVideo.transform.localPosition = pos;
                 newVideo.transform.localScale = size;
-                newVideo.GetComponent<MediaPlayerCtrl>().m_strFileName = "file://" + line[2];
+                newVideo.GetComponent<MediaPlayerCtrl>().m_strFileName =  line[2];
 
                 objectsNumbers.Add(objectNumber, newVideo);
             }

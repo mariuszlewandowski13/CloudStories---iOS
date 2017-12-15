@@ -4,31 +4,41 @@ using UnityEngine;
 using System;
 using System.Net;
 using System.IO;
-using UnityEngine.UI;
+using System.Threading;
 
 public class ProjectData
 {
     public int ID;
+    public string owner;
     public List<int> sceneNumbers;
 
-    public ProjectData(int id)
+    public Color color;
+
+    public ProjectData(int id, string owner)
     {
         ID = id;
+        this.owner = owner;
         sceneNumbers = new List<int>();
     }
+
+    
 }
 
 
 public class ProjectsManager : MonoBehaviour {
 
-    public InputField input;
-
     public static List<ProjectData> projects;
 
-	void Start () {
+    public static bool projectsLoaded;
+
+    public GameObject ownerPanel;
+
+    void Start () {
         projects = new List<ProjectData>();
-        LoadProjects();
-	}
+        Thread thr2 = new Thread(LoadProjects);
+        thr2.Start();
+        SetOwnerPanelName();
+    }
 
     void LoadProjects()
     {
@@ -54,8 +64,8 @@ public class ProjectsManager : MonoBehaviour {
             res = row.Split(new string[] { "#####" }, StringSplitOptions.None);
             if (res.Length > 1)
             {
-                ProjectData proj = new ProjectData(int.Parse(res[0]));
-                string [] scenes = res[1].Split(new string[] {  ","}, StringSplitOptions.None);
+                ProjectData proj = new ProjectData(int.Parse(res[0]), res[1]);
+                string [] scenes = res[2].Split(new string[] {  ","}, StringSplitOptions.None);
                 foreach (string scene in scenes)
                 {
                     int number;
@@ -65,7 +75,7 @@ public class ProjectsManager : MonoBehaviour {
                     }
                     
                 }
-                ProjectsManager.projects.Add(proj);
+                projects.Add(proj);
 
             }
         }
@@ -75,8 +85,17 @@ public class ProjectsManager : MonoBehaviour {
         // Clean up the streams and the response.  
         reader.Close();
         response.Close();
-        input.interactable = true;
+
+        
+
+        projectsLoaded = true;
     }
 
-
+    private void SetOwnerPanelName()
+    {
+        if (ownerPanel != null)
+        {
+            ownerPanel.GetComponent<ProjectsMenu>().projectsOwner = ApplicationStaticData.appOwner;
+        }
+    }
 }

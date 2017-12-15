@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class ReturnToScene : MonoBehaviour {
 
-    public string SceneName;
+    public ProjectsPanelManager manager;
 
     void Start()
     {
@@ -18,9 +18,9 @@ public class ReturnToScene : MonoBehaviour {
     void ReturnTo()
     {
         
-        if (SceneName != "")
+        if (manager != null)
         {
-            SceneManager.LoadScene(SceneName);
+            manager.ReturnToLoadingProjects();
         }
        
     }

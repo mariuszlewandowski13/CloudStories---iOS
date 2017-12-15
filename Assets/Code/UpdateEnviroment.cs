@@ -38,10 +38,28 @@ public class UpdateEnviroment : MonoBehaviour {
 
     public GameObject layoutObject;
 
-	void Start () {
+    public void LoadObjects()
+    {
         objectsNumbers = new Dictionary<int, GameObject>();
-        InvokeRepeating("UpdateEnvir", 5.0f, 5.0f);
-	}
+        InvokeRepeating("UpdateEnvir", 1.0f, 5.0f);
+    }
+
+    public void StopLoading()
+    {
+       CancelInvoke("UpdateEnvir");
+        ClearEnviroment();
+    }
+
+    private void ClearEnviroment()
+    {
+        foreach (int key in objectsNumbers.Keys)
+        {
+            Destroy(objectsNumbers[key]);
+        }
+        objectsNumbers.Clear();
+
+    }
+
 
     private void UpdateEnvir()
     {

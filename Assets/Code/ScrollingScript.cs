@@ -15,6 +15,8 @@ public class ScrollingScript : MonoBehaviour {
 
     public bool scrollingStarted;
 
+    private bool clicked;
+
     void Update()
     {
         bool pressedDown = Input.GetMouseButton(0);
@@ -42,8 +44,9 @@ public class ScrollingScript : MonoBehaviour {
                 actualPointing = hit.transform;
                 actualPointing.GetComponent<ClickableButton>().pointing = true;
 
-                if (actualPointing.GetComponent<IClickable>() != null && pressedDown)
+                if (actualPointing.GetComponent<IClickable>() != null && pressedDown && !clicked)
                 {
+                    clicked = true;
                     actualPointing.GetComponent<IClickable>().Clicked();
                 }
             }
@@ -71,6 +74,8 @@ public class ScrollingScript : MonoBehaviour {
             scrollingStarted = false;
             actualPointing = null;
         }
+
+        if (!pressedDown) clicked = false;
 
           
         

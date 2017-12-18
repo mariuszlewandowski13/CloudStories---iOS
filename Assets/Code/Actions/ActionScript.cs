@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionScript : MonoBehaviour {
+public class ActionScript : ClickableButton {
 
     public string actionData;
 

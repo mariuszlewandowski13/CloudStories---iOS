@@ -71,6 +71,7 @@ public class Object3DScript : MonoBehaviour {
 
         mesh = FastObjImporter.Instance.ImportFile(objBytes);
         GetComponent<MeshFilter>().mesh= mesh;
+        gameObject.AddComponent<BoxCollider>();
     }
 
 

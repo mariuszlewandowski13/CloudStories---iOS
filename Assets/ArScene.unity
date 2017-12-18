@@ -670,6 +670,7 @@ MonoBehaviour:
   createnewProjectIconPrefab: {fileID: 0}
   firstIcon: {fileID: 0}
   lastIcon: {fileID: 0}
+  lastIconObject: {fileID: 0}
   scroll: {fileID: 1144909672}
   iconPrefab: {fileID: 1286466554934228, guid: 551a18e4e6e10834fbf03a81332f2842, type: 2}
   panel: {fileID: 1144909668}
@@ -2086,7 +2087,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1636566183}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 19.460495, y: 0.42777026, z: 6.711081}
+  m_LocalPosition: {x: 0.79, y: 0.42777026, z: 6.711081}
   m_LocalScale: {x: 3.2905405, y: 5.4842343, z: 0.10968468}
   m_Children:
   - {fileID: 646000499}
@@ -2158,6 +2159,7 @@ MonoBehaviour:
   createnewProjectIconPrefab: {fileID: 0}
   firstIcon: {fileID: 0}
   lastIcon: {fileID: 0}
+  lastIconObject: {fileID: 0}
   scroll: {fileID: 86105807}
   iconPrefab: {fileID: 1286466554934228, guid: 551a18e4e6e10834fbf03a81332f2842, type: 2}
   panel: {fileID: 86105803}

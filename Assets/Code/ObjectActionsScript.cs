@@ -19,6 +19,7 @@ public class ObjectAction
     public ObjectAction(ObjectActionType newType, string addData)
     {
         type = newType;
+        updated = true;
         additionalData = addData;
     }
 }
@@ -28,13 +29,16 @@ public class ObjectActionsScript : MonoBehaviour {
     private List<ObjectAction> actions;
     private List<ObjectAction> actionsToRemove;
 
+    public string objectID;
+
     private void Start()
     {
-        actions = new List<ObjectAction>();
+        
     }
 
-    public void ProcessLines(string[] line)
+    public void ProcessLines(string[] line, string id)
     {
+        objectID = id;
         ClearProjectsUpdate();
         for (int i = 0; i < line.Length; i += 2)
         {
@@ -46,6 +50,12 @@ public class ObjectActionsScript : MonoBehaviour {
 
     private void ClearProjectsUpdate()
     {
+        if (actions == null)
+        {
+            actions = new List<ObjectAction>();
+            return;
+
+        }
         foreach (ObjectAction act in actions)
         {
             act.updated = false;

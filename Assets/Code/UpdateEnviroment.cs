@@ -50,6 +50,13 @@ public class UpdateEnviroment : MonoBehaviour {
         ClearEnviroment();
     }
 
+    public void ChangeSceneNumber(int sceneNumber)
+    {
+        StopLoading();
+        ApplicationStaticData.sceneID = sceneNumber;
+        InvokeRepeating("UpdateEnvir", 0.0f, 5.0f);
+    }
+
     private void ClearEnviroment()
     {
         foreach (int key in objectsNumbers.Keys)
@@ -144,7 +151,7 @@ public class UpdateEnviroment : MonoBehaviour {
                 { 
                 ObjectActionsScript actions = newObject.AddComponent<ObjectActionsScript>();
                 string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
-                actions.ProcessLines(res);
+                actions.ProcessLines(res, line[0]);
             }
                 objectsNumbers.Add(objectNumber, newObject);
 
@@ -162,7 +169,7 @@ public class UpdateEnviroment : MonoBehaviour {
                 {
                     ObjectActionsScript actions = objectToChange.GetComponent<ObjectActionsScript>();
                     string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
-                    actions.ProcessLines(res);
+                    actions.ProcessLines(res, line[0]);
                 }
 
                 objectToChange.transform.localPosition = pos;
@@ -221,7 +228,7 @@ public class UpdateEnviroment : MonoBehaviour {
                 {
                     ObjectActionsScript actions = newShape.AddComponent<ObjectActionsScript>();
                     string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
-                    actions.ProcessLines(res);
+                    actions.ProcessLines(res, line[0]);
                 }
 
 
@@ -246,7 +253,7 @@ public class UpdateEnviroment : MonoBehaviour {
                     {
                         ObjectActionsScript actions = objectToChange.GetComponent<ObjectActionsScript>();
                         string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
-                        actions.ProcessLines(res);
+                        actions.ProcessLines(res, line[0]);
                         }
 
                     objectToChange.transform.localPosition = pos;
@@ -284,7 +291,7 @@ public class UpdateEnviroment : MonoBehaviour {
                 {
                     ObjectActionsScript actions = newVideo.AddComponent<ObjectActionsScript>();
                     string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
-                    actions.ProcessLines(res);
+                    actions.ProcessLines(res, line[0]);
                 }
 
 
@@ -309,7 +316,7 @@ public class UpdateEnviroment : MonoBehaviour {
                 {
                     ObjectActionsScript actions = objectToChange.GetComponent<ObjectActionsScript>();
                     string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
-                    actions.ProcessLines(res);
+                    actions.ProcessLines(res, line[0]);
                 }
 
                 objectToChange.transform.localPosition = pos;

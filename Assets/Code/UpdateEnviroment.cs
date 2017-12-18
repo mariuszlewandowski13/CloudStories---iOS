@@ -130,18 +130,25 @@ public class UpdateEnviroment : MonoBehaviour {
 
                 if (Int32.TryParse(line[2], out number))
                 {
-                     newObject = Instantiate(objectsPrefabs[number], pos, Quaternion.Euler(rot));
+                    newObject = Instantiate(objectsPrefabs[number], pos, Quaternion.Euler(rot));
                 }
-                else {
+                else
+                {
                     newObject = Load3DObject(line[2], pos, rot, objectNumber);
                 }
                 newObject.transform.parent = spawnedObjectsParent.transform;
                 newObject.transform.localPosition = pos;
                 newObject.transform.localScale = size;
-                
+
+                if (line.Length > 12)
+                { 
+                ObjectActionsScript actions = newObject.AddComponent<ObjectActionsScript>();
+                string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
+                actions.ProcessLines(res);
+            }
                 objectsNumbers.Add(objectNumber, newObject);
 
-
+                
 
             }
             else {
@@ -151,6 +158,12 @@ public class UpdateEnviroment : MonoBehaviour {
                 Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
                 Vector3 size = new Vector3(float.Parse(line[9]), float.Parse(line[10]), float.Parse(line[11]));
 
+                if (line.Length > 12)
+                {
+                    ObjectActionsScript actions = objectToChange.GetComponent<ObjectActionsScript>();
+                    string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
+                    actions.ProcessLines(res);
+                }
 
                 objectToChange.transform.localPosition = pos;
                 objectToChange.transform.rotation = Quaternion.Euler(rot);
@@ -204,8 +217,14 @@ public class UpdateEnviroment : MonoBehaviour {
                     newShape.GetComponent<ImageScript>().SetImagePath(line[2]);
                 }
 
-                
-                
+                if (line.Length > 12)
+                {
+                    ObjectActionsScript actions = newShape.AddComponent<ObjectActionsScript>();
+                    string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
+                    actions.ProcessLines(res);
+                }
+
+
 
                 newShape.transform.parent = spawnedObjectsParent.transform;
                 newShape.transform.localPosition = pos;
@@ -221,6 +240,14 @@ public class UpdateEnviroment : MonoBehaviour {
                     Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
                     Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
                     Vector3 size = new Vector3(float.Parse(line[9]), float.Parse(line[10]), float.Parse(line[11]));
+
+
+                    if (line.Length > 12)
+                    {
+                        ObjectActionsScript actions = objectToChange.GetComponent<ObjectActionsScript>();
+                        string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
+                        actions.ProcessLines(res);
+                        }
 
                     objectToChange.transform.localPosition = pos;
                     objectToChange.transform.rotation = Quaternion.Euler(rot);
@@ -252,8 +279,13 @@ public class UpdateEnviroment : MonoBehaviour {
                 
 
                     newVideo = Instantiate(prefab, pos, Quaternion.Euler(rot));
-                
 
+                if (line.Length > 12)
+                {
+                    ObjectActionsScript actions = newVideo.AddComponent<ObjectActionsScript>();
+                    string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
+                    actions.ProcessLines(res);
+                }
 
 
 
@@ -271,6 +303,14 @@ public class UpdateEnviroment : MonoBehaviour {
                 Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
                 Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
                 Vector3 size = new Vector3(float.Parse(line[9]), float.Parse(line[10]), float.Parse(line[11]));
+
+
+                if (line.Length > 12)
+                {
+                    ObjectActionsScript actions = objectToChange.GetComponent<ObjectActionsScript>();
+                    string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
+                    actions.ProcessLines(res);
+                }
 
                 objectToChange.transform.localPosition = pos;
                 objectToChange.transform.rotation = Quaternion.Euler(rot);

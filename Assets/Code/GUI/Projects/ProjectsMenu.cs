@@ -12,6 +12,7 @@ public class ProjectsMenu : MonoBehaviour {
 
     public CheckRaycasting firstIcon;
     public CheckRaycasting lastIcon;
+    public GameObject lastIconObject;
 
     public VerticalScroll scroll;
 
@@ -79,7 +80,7 @@ public class ProjectsMenu : MonoBehaviour {
 
     public void LoadScenes()
     {
-        scroll = GetComponent<VerticalScroll>();
+        scroll = panel.GetComponent<VerticalScroll>();
         startY = actualY = 0.4f;
         startX = actualX = -0.3f;
         ShowUProjectScenes();
@@ -97,9 +98,9 @@ public class ProjectsMenu : MonoBehaviour {
             if ((projectsOwner == ""  && ApplicationStaticData.appOwner != project.owner) || projectsOwner == project.owner)
             {
                 GameObject newButton = Instantiate(iconPrefab);
-                newButton.transform.parent = scroll.transform;
+                newButton.transform.parent = transform;
 
-                newButton.transform.position = scroll.transform.position;
+                newButton.transform.position = transform.position;
                 newButton.transform.localPosition += new Vector3(actualX, actualY, actualZ);
 
                 if (project.color == new Color())
@@ -111,12 +112,8 @@ public class ProjectsMenu : MonoBehaviour {
 
                 i++;
 
-                if (i == ProjectsManager.projects.Count)
-                {
-                    CheckRaycasting raycasting = newButton.AddComponent<CheckRaycasting>();
-                    raycasting.raycastingGameObject = panel;
-                    lastIcon = raycasting;
-                }else if (i == 1)
+                    
+                 if (i == 1)
                 {
                     CheckRaycasting raycasting = newButton.AddComponent<CheckRaycasting>();
                     raycasting.raycastingGameObject = panel;
@@ -136,11 +133,20 @@ public class ProjectsMenu : MonoBehaviour {
                 {
                     actualX += xAdding;
                 }
+
+                lastIconObject = newButton;
             }
 
         }
+        if (lastIconObject != null)
+        {
+            CheckRaycasting raycasting = lastIconObject.AddComponent<CheckRaycasting>();
+            raycasting.raycastingGameObject = panel;
+            lastIcon = raycasting;
+        }
+        
 
-       
+
 
     }
 

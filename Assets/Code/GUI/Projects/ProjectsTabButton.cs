@@ -3,20 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ProjectsTabButton : MonoBehaviour
+public class ProjectsTabButton : ClickableButton,IClickable
 {
-
     public int tabToLoad;
     public ProjectsPanelManager manager;
 
-    void Start()
+    public bool setInteractable;
+
+    private void Start()
     {
-        Button btn = GetComponent<Button>();
-        btn.onClick.AddListener(LoadTab);
+        if (setInteractable)
+        {
+            interactable = true;
+        }
     }
 
-    void LoadTab()
+
+    public void Clicked()
     {
-        manager.TabButtonClicked(tabToLoad);
+        if (interactable)
+        {
+            manager.TabButtonClicked(tabToLoad);
+        }
     }
 }

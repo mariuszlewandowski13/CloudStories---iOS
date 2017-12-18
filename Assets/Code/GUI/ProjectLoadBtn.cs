@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ProjectLoadBtn : MonoBehaviour {
+public class ProjectLoadBtn : ClickableButton, IClickable {
 
     private int projectNumber;
 
@@ -22,17 +22,13 @@ public class ProjectLoadBtn : MonoBehaviour {
 
     private void UpdatePresention()
     {
-        transform.Find("Text").GetComponent<Text>().text = projectNumber.ToString();
-        GetComponent<Image>().color = color;
+        transform.Find("Text").GetComponent<TextMesh>().text = projectNumber.ToString();
+        GetComponent<Renderer>().material.color = color;
     }
 
-    void Start()
-    {
-        Button btn = GetComponent<Button>();
-        btn.onClick.AddListener(LoadProj);
-    }
+  
 
-    void LoadProj()
+    public void Clicked()
     {
         manager.LoadProject(projectNumber);
     }

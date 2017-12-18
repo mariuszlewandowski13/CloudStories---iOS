@@ -48,17 +48,17 @@ public class IconShowHideScript : MonoBehaviour {
 
     private void ActivateObject()
     {
-        if (GetComponent<Button>() == null) GetComponent<Button>().interactable = true;
-        if (GetComponent<Image>() != null) GetComponent<Image>().enabled = true;
-        if (transform.Find("Text").GetComponent<Text>() != null) transform.Find("Text").GetComponent<Text>().enabled = true;
+        if (GetComponent<ClickableButton>() == null) GetComponent<ClickableButton>().interactable = true;
+        if (GetComponent<Renderer>() != null) GetComponent<Renderer>().enabled = true;
+        if (transform.Find("Text").GetComponent<Renderer>() != null) transform.Find("Text").GetComponent<Renderer>().enabled = true;
         isActive = true;
     }
 
     private void DeactivateObject()
     {
-        if (GetComponent<Button>() != null) GetComponent<Button>().interactable = false;
-        if (GetComponent<Image>() != null) GetComponent<Image>().enabled = false;
-        if (transform.Find("Text").GetComponent<Text>() != null) transform.Find("Text").GetComponent<Text>().enabled = false;
+        if (GetComponent<ClickableButton>() != null) GetComponent<ClickableButton>().interactable = false;
+        if (GetComponent<Renderer>() != null) GetComponent<Renderer>().enabled = false;
+        if (transform.Find("Text").GetComponent<Renderer>() != null) transform.Find("Text").GetComponent<Renderer>().enabled = false;
         isActive = false;
     }
 }

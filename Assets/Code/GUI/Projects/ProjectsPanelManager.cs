@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ProjectsPanelManager : MonoBehaviour {
 
     public GameObject[] tabs;
-    public Button[] tabsButtons;
+    public ClickableButton[] tabsButtons;
 
     public GameObject panel;
 

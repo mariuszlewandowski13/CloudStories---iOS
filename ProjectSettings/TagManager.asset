@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Row
+  - SceneObject
+  - Scroll
+  - Btn
   layers:
   - Default
   - TransparentFX

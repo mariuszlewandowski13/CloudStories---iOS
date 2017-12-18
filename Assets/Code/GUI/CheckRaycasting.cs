@@ -14,7 +14,7 @@ public class CheckRaycasting : MonoBehaviour {
 
     private void Start()
     {
-            raycastDirection = -transform.up;
+            raycastDirection = transform.forward;
 
     }
 

@@ -12,6 +12,9 @@ public class AudioActionScript : ActionScript {
 
     private bool loading;
     private bool loadingFromURL;
+    private bool loadingClip;
+
+    private AudioClip clip;
 
     private string objID;
 
@@ -58,8 +61,21 @@ public class AudioActionScript : ActionScript {
     {
         if (loading && !loadingFromURL)
         {
+            loading = false;
            StartCoroutine(LoadFromBytes());
         }
+
+        if (loadingClip && clip != null && clip.loadState == AudioDataLoadState.Loaded)
+        {
+            PlayClip();
+        }
+    }
+
+    private void PlayClip()
+    {
+        loadingClip = false;
+        gameObject.GetComponent<AudioSource>().clip = clip;
+        gameObject.GetComponent<AudioSource>().Play();
     }
 
     IEnumerator LoadFromBytes()
@@ -72,11 +88,9 @@ public class AudioActionScript : ActionScript {
         if (!System.String.IsNullOrEmpty(loader.error))
             Debug.LogError(loader.error);
         else {
-            AudioClip s1 = loader.GetAudioClip(false, false, AudioType.MPEG);
-            gameObject.GetComponent<AudioSource>().clip = s1;
-            gameObject.GetComponent<AudioSource>().Play();
+           clip = loader.GetAudioClip(false, false, AudioType.MPEG);
+            loadingClip = true;
         }
-        loading = false;
     }
 
     private void CreateAudioSource()

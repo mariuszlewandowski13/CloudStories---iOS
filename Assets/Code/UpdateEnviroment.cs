@@ -17,6 +17,8 @@ public enum ObjectsTypes
 
 public class UpdateEnviroment : MonoBehaviour {
 
+    public static UpdateEnviroment instance;
+
     public GameObject spawnedObjectsParent;
     private string objectsPath = "obj3D";
 
@@ -37,6 +39,14 @@ public class UpdateEnviroment : MonoBehaviour {
     public GameObject videoObjectPrefab;
 
     public GameObject layoutObject;
+
+    private void Start()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
     public void LoadObjects()
     {
@@ -120,39 +130,34 @@ public class UpdateEnviroment : MonoBehaviour {
 
     private void ProcessLine(string[] line)
     {
-        ObjectsTypes objType = (ObjectsTypes)Int32.Parse(line[1]);
+        string objType = line[1];
 
-        if (objType == ObjectsTypes.object3D)
+        if (objType == "Object3D")
         {
             int objectNumber = Int32.Parse(line[0]);
             if (!objectsNumbers.ContainsKey(objectNumber))
             {
-                int number;
+
                 GameObject newObject = null;
 
 
-                Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
-                Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
-                Vector3 size = new Vector3(float.Parse(line[9]), float.Parse(line[10]), float.Parse(line[11]));
+                Vector3 pos = new Vector3(float.Parse(line[5]), float.Parse(line[6]), float.Parse(line[7]));
+                Vector3 rot = new Vector3(float.Parse(line[8]), float.Parse(line[9]), float.Parse(line[10]));
+                Vector3 size = new Vector3(float.Parse(line[11]), float.Parse(line[12]), float.Parse(line[13]));
+                Color color = new Color(float.Parse(line[14]), float.Parse(line[15]), float.Parse(line[16]), float.Parse(line[17]));
 
-                if (Int32.TryParse(line[2], out number))
-                {
-                    newObject = Instantiate(objectsPrefabs[number], pos, Quaternion.Euler(rot));
-                }
-                else
-                {
-                    newObject = Load3DObject(line[2], pos, rot, objectNumber);
-                }
+                newObject = Load3DObject(line[4], line[3], pos, rot, objectNumber, color);
+
                 newObject.transform.parent = spawnedObjectsParent.transform;
                 newObject.transform.localPosition = pos;
                 newObject.transform.localScale = size;
 
-                if (line.Length > 12)
-                { 
-                ObjectActionsScript actions = newObject.AddComponent<ObjectActionsScript>();
-                string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
-                actions.ProcessLines(res, line[0]);
-            }
+            //    if (line.Length > 12)
+            //    { 
+            //    ObjectActionsScript actions = newObject.AddComponent<ObjectActionsScript>();
+            //    string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
+            //    actions.ProcessLines(res, line[0]);
+            //}
                 objectsNumbers.Add(objectNumber, newObject);
 
                 
@@ -161,16 +166,16 @@ public class UpdateEnviroment : MonoBehaviour {
             else {
                 GameObject objectToChange = objectsNumbers[objectNumber];
 
-                Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
-                Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
-                Vector3 size = new Vector3(float.Parse(line[9]), float.Parse(line[10]), float.Parse(line[11]));
+                Vector3 pos = new Vector3(float.Parse(line[5]), float.Parse(line[6]), float.Parse(line[7]));
+                Vector3 rot = new Vector3(float.Parse(line[8]), float.Parse(line[9]), float.Parse(line[10]));
+                Vector3 size = new Vector3(float.Parse(line[11]), float.Parse(line[12]), float.Parse(line[13]));
 
-                if (line.Length > 12)
-                {
-                    ObjectActionsScript actions = objectToChange.GetComponent<ObjectActionsScript>();
-                    string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
-                    actions.ProcessLines(res, line[0]);
-                }
+                //if (line.Length > 12)
+                //{
+                //    ObjectActionsScript actions = objectToChange.GetComponent<ObjectActionsScript>();
+                //    string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
+                //    actions.ProcessLines(res, line[0]);
+                //}
 
                 objectToChange.transform.localPosition = pos;
                 objectToChange.transform.rotation = Quaternion.Euler(rot);
@@ -180,22 +185,7 @@ public class UpdateEnviroment : MonoBehaviour {
                 //objectToChange.transform.parent = spawnedObjectsParent.transform;
             }
         }
-        else if (objType == ObjectsTypes.layout)
-        {
-            int layoutNumber = Int32.Parse(line[2]);
-            if (layout != layoutNumber)
-            {
-                layout = layoutNumber;
-                ClearLayout();
-                if (layoutNumber != 0)
-                {
-                    GameObject newLayout = Instantiate(layouts[layoutNumber - 1]);
-                    newLayout.transform.parent = layoutObject.transform;
-                }
-
-            }
-        }
-        else if (objType == ObjectsTypes.shapeObject)
+        else if (objType == "ImageObject")
         {
             int objectNumber = Int32.Parse(line[0]);
             if (!objectsNumbers.ContainsKey(objectNumber))
@@ -206,30 +196,21 @@ public class UpdateEnviroment : MonoBehaviour {
 
 
 
-                Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
-                Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
-                Vector3 size = new Vector3(float.Parse(line[9]), float.Parse(line[10]), float.Parse(line[11]));
+                Vector3 pos = new Vector3(float.Parse(line[5]), float.Parse(line[6]), float.Parse(line[7]));
+                Vector3 rot = new Vector3(float.Parse(line[8]), float.Parse(line[9]), float.Parse(line[10]));
+                Vector3 size = new Vector3(float.Parse(line[11]), float.Parse(line[12]), float.Parse(line[13]));
 
                 GameObject newShape = null;
 
-                int number;
-
-                if (Int32.TryParse(line[2], out number))
-                {
-                    newShape = Instantiate(shapesPrefabs[number], pos, Quaternion.Euler(rot));
-                }
-                else
-                {
                     newShape = Instantiate(prefab, pos, Quaternion.Euler(rot));
-                    newShape.GetComponent<ImageScript>().SetImagePath(line[2]);
-                }
+                    newShape.GetComponent<ImageScript>().SetImagePath(line[3]);
 
-                if (line.Length > 12)
-                {
-                    ObjectActionsScript actions = newShape.AddComponent<ObjectActionsScript>();
-                    string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
-                    actions.ProcessLines(res, line[0]);
-                }
+                //if (line.Length > 12)
+                //{
+                //    ObjectActionsScript actions = newShape.AddComponent<ObjectActionsScript>();
+                //    string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
+                //    actions.ProcessLines(res, line[0]);
+                //}
 
 
 
@@ -244,17 +225,17 @@ public class UpdateEnviroment : MonoBehaviour {
                 {
                     GameObject objectToChange = objectsNumbers[objectNumber];
 
-                    Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
-                    Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
-                    Vector3 size = new Vector3(float.Parse(line[9]), float.Parse(line[10]), float.Parse(line[11]));
+                    Vector3 pos = new Vector3(float.Parse(line[5]), float.Parse(line[6]), float.Parse(line[7]));
+                    Vector3 rot = new Vector3(float.Parse(line[8]), float.Parse(line[9]), float.Parse(line[10]));
+                    Vector3 size = new Vector3(float.Parse(line[11]), float.Parse(line[12]), float.Parse(line[13]));
 
 
-                    if (line.Length > 12)
-                    {
-                        ObjectActionsScript actions = objectToChange.GetComponent<ObjectActionsScript>();
-                        string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
-                        actions.ProcessLines(res, line[0]);
-                        }
+                    //if (line.Length > 12)
+                    //{
+                    //    ObjectActionsScript actions = objectToChange.GetComponent<ObjectActionsScript>();
+                    //    string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
+                    //    actions.ProcessLines(res, line[0]);
+                    //    }
 
                     objectToChange.transform.localPosition = pos;
                     objectToChange.transform.rotation = Quaternion.Euler(rot);
@@ -266,73 +247,73 @@ public class UpdateEnviroment : MonoBehaviour {
                 }
             }
         }
-        else if (objType == ObjectsTypes.movie)
-        {
-            int objectNumber = Int32.Parse(line[0]);
-            if (!objectsNumbers.ContainsKey(objectNumber))
-            {
+        //else if (objType == ObjectsTypes.movie)
+        //{
+        //    int objectNumber = Int32.Parse(line[0]);
+        //    if (!objectsNumbers.ContainsKey(objectNumber))
+        //    {
 
-                GameObject prefab = videoObjectPrefab;
-
-
+        //        GameObject prefab = videoObjectPrefab;
 
 
-                Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
-                Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
-                Vector3 size = new Vector3(float.Parse(line[9]), float.Parse(line[10]), float.Parse(line[11]));
 
-                GameObject newVideo = null;
+
+        //        Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
+        //        Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
+        //        Vector3 size = new Vector3(float.Parse(line[9]), float.Parse(line[10]), float.Parse(line[11]));
+
+        //        GameObject newVideo = null;
 
                 
 
-                    newVideo = Instantiate(prefab, pos, Quaternion.Euler(rot));
+        //            newVideo = Instantiate(prefab, pos, Quaternion.Euler(rot));
 
-                if (line.Length > 12)
-                {
-                    ObjectActionsScript actions = newVideo.AddComponent<ObjectActionsScript>();
-                    string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
-                    actions.ProcessLines(res, line[0]);
-                }
-
-
-
-                newVideo.transform.parent = spawnedObjectsParent.transform;
-                newVideo.transform.localPosition = pos;
-                newVideo.transform.localScale = size;
-                newVideo.GetComponent<MediaPlayerCtrl>().m_strFileName =  line[2];
-
-                objectsNumbers.Add(objectNumber, newVideo);
-            }
-            else
-            {
-                GameObject objectToChange = objectsNumbers[objectNumber];
-
-                Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
-                Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
-                Vector3 size = new Vector3(float.Parse(line[9]), float.Parse(line[10]), float.Parse(line[11]));
+        //        if (line.Length > 12)
+        //        {
+        //            ObjectActionsScript actions = newVideo.AddComponent<ObjectActionsScript>();
+        //            string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
+        //            actions.ProcessLines(res, line[0]);
+        //        }
 
 
-                if (line.Length > 12)
-                {
-                    ObjectActionsScript actions = objectToChange.GetComponent<ObjectActionsScript>();
-                    string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
-                    actions.ProcessLines(res, line[0]);
-                }
 
-                objectToChange.transform.localPosition = pos;
-                objectToChange.transform.rotation = Quaternion.Euler(rot);
-                objectToChange.transform.localScale = size;
-            }
-        }
+        //        newVideo.transform.parent = spawnedObjectsParent.transform;
+        //        newVideo.transform.localPosition = pos;
+        //        newVideo.transform.localScale = size;
+        //        newVideo.GetComponent<MediaPlayerCtrl>().m_strFileName =  line[2];
+
+        //        objectsNumbers.Add(objectNumber, newVideo);
+        //    }
+        //    else
+        //    {
+        //        GameObject objectToChange = objectsNumbers[objectNumber];
+
+        //        Vector3 pos = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
+        //        Vector3 rot = new Vector3(float.Parse(line[6]), float.Parse(line[7]), float.Parse(line[8]));
+        //        Vector3 size = new Vector3(float.Parse(line[9]), float.Parse(line[10]), float.Parse(line[11]));
+
+
+        //        if (line.Length > 12)
+        //        {
+        //            ObjectActionsScript actions = objectToChange.GetComponent<ObjectActionsScript>();
+        //            string[] res = line[12].Split(new string[] { "*****" }, StringSplitOptions.None);
+        //            actions.ProcessLines(res, line[0]);
+        //        }
+
+        //        objectToChange.transform.localPosition = pos;
+        //        objectToChange.transform.rotation = Quaternion.Euler(rot);
+        //        objectToChange.transform.localScale = size;
+        //    }
+        //}
 
 
     }
 
 
-    private GameObject Load3DObject(string path, Vector3 pos, Vector3 rot, int id)
+    private GameObject Load3DObject(string MeshPath, string texPath, Vector3 pos, Vector3 rot, int id, Color color)
     {
         GameObject newObject = Instantiate(object3DPrefab, pos, Quaternion.Euler(rot));
-        newObject.GetComponent<Object3DScript>().LoadObject(path, "object3D.obj", "tex.png", id); 
+        newObject.GetComponent<Object3DScript>().LoadObject(MeshPath, texPath, id, color); 
         return newObject;
     }
 

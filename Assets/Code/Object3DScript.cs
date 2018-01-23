@@ -44,6 +44,8 @@ public class Object3DScript : MonoBehaviour {
 
     private static string dataPath;
 
+    private bool standardLoad = true;
+
     public void LoadObject(string mP, string tP,  int id, Color color)
     {
         parts = new List<Object3Dpart>();
@@ -61,9 +63,10 @@ public class Object3DScript : MonoBehaviour {
             thr.Start();
         }
         else {
-            //Thread thr = new Thread(() => LoadData(mP, id));
-            // thr.Start();
-            LoadData(tP, id);
+            standardLoad = false;
+            Thread thr = new Thread(() => LoadData(mP, id));
+            thr.Start();
+            
         }
 
 
@@ -109,11 +112,11 @@ public class Object3DScript : MonoBehaviour {
     {
         string[] fields = line.Split(new string[] { " " }, StringSplitOptions.None);
         
-        string meshPath = mainPath + "Object3D" + fields[0] + ".obj";
+        string meshPath = mainPath + fields[0];
         string texPath = "";
         if (fields[1] != "-1")
         {
-             texPath = mainPath + "Object3D" + fields[1] + ".png";
+             texPath = mainPath + fields[1];
         }
 
         Color color = new Color(float.Parse(fields[2]), float.Parse(fields[3]), float.Parse(fields[4]), float.Parse(fields[5]));
@@ -178,7 +181,14 @@ public class Object3DScript : MonoBehaviour {
     private void ShowObj(Object3Dpart part)
     {
         Mesh mesh = new Mesh();
-        mesh = FastObjImporter.Instance.ImportFile(part.objBytes);
+        if (standardLoad)
+        {
+            mesh = FastObjImporter.Instance.ImportFile(part.objBytes);
+        }
+        else {
+            mesh = MeshSerializer.ReadMesh(part.objBytes);
+        }
+        
         part.ownerObject.GetComponent<MeshFilter>().mesh= mesh;
         //part.ownerObject.AddComponent<BoxCollider>();
         part.ownerObject.GetComponent<Renderer>().material.color = part.color;
